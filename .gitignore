@@ -1,0 +1,43 @@
+# .gitignore
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Logs
+reservaciones/logs/*.log
+*.log
+
+# Sessions (WhatsApp)
+sessions/
+userData/
+
+# Node modules
+node_modules/
+bot-messenger/node_modules/
+
+# Docker
+.docker/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Backups
+*.backup
+*.sql.gz
+backups/

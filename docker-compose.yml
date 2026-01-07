@@ -1,0 +1,39 @@
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./reservaciones:/var/www/html/reservaciones
+      # Mount other existing directories if needed
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - SUPABASE_DB_HOST=${SUPABASE_DB_HOST}
+      - SUPABASE_DB_PASSWORD=${SUPABASE_DB_PASSWORD}
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  # wppconnect:
+  #   image: wppconnect/server:latest
+  #   ports:
+  #     - "21465:21465"
+  #   environment:
+  #     - WHATSAPP_SESSION=rosa_mezcal_session
+  #     - WEBHOOK_URL=http://web/reservaciones/api/webhook_whatsapp.php
+  #   volumes:
+  #     - ./sessions:/usr/src/app/userData
+  #   restart: always
+
+  messenger-bot:
+    build: ./bot-messenger
+    environment:
+      - FB_PAGE_TOKEN=${FB_PAGE_TOKEN}
+      - FB_VERIFY_TOKEN=${FB_VERIFY_TOKEN}
+      - WEBHOOK_URL=http://web/reservaciones/api/webhook_messenger.php
+    restart: always
